@@ -1,4 +1,4 @@
-r"""``spec/nv_layouts.json`` から、参照用のドキュメント（docs/reference/ の各レコードのページと索引）を作る。
+r"""``src/nvstore/resources/nv_layouts.json`` から、参照用のドキュメント（docs/reference/ の各レコードのページと索引）を作る。
 
     uv run --no-project python tools/gen_spec_docs.py
 
@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = ROOT / "spec" / "nv_layouts.json"
+SPEC = ROOT / "src" / "nvstore" / "resources" / "nv_layouts.json"
 OUT = ROOT / "docs" / "reference"
 
 #: jvdata-store の公開ドキュメント。JV-Data と同じレコードはそちらを指す。
@@ -325,7 +325,7 @@ def index_page(spec: dict[str, Any], by_record: dict[str, list[str]]) -> str:
         "",
         "## 地方だけのレコード・JV-Data と中身が違うレコード",
         "",
-        "`spec/nv_layouts.json` から生成しています。",
+        "`src/nvstore/resources/nv_layouts.json` から生成しています。",
         "",
         "| ID | 名前 | レコード長 | 項目数 | 届くデータ種別 | キー |",
         "| :--- | :--- | ---: | ---: | :--- | :--- |",

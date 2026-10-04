@@ -5388,9 +5388,9 @@
      "offset": 27,
      "size": 8,
      "repeat": 1,
-     "is_key": false,
+     "is_key": true,
      "default": "",
-     "comment": "mmddHHmm。時系列で貯めるときはこれも鍵に足す"
+     "comment": "mmddHHmm。O1〜O6 と同じく鍵に含め、確定と速報の断面を別の行にする"
     },
     {
      "no": "11",

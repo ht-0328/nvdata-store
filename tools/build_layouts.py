@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "spec" / "nv_layouts.json"
+OUT = ROOT / "src" / "nvstore" / "resources" / "nv_layouts.json"
 
 #: 1つの項目。``children`` が空なら単純項目、あれば繰返しブロック。
 Item = dict[str, Any]
@@ -332,7 +332,7 @@ def ha_items() -> list[Item]:
 def oa_items() -> list[Item]:
     """OA オッズA（枠単）。HA と同じ競馬場で配信される。"""
     return (COMMON + RACE_KEY + [
-        f("発表月日時分", 8, "mmddHHmm。時系列で貯めるときはこれも鍵に足す"),
+        f("発表月日時分", 8, "mmddHHmm。O1〜O6 と同じく鍵に含め、確定と速報の断面を別の行にする", key=True),
         f("登録頭数", 2),
         f("出走頭数", 2),
         f("発売フラグ　枠単", 1, "枠単発売の有無（0:発売なし 7:発売あり）。観測した範囲では 7"),

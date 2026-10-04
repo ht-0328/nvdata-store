@@ -1,0 +1,256 @@
+"""地方競馬DATA の取得・閲覧用のローカル HTTP サーバー。
+
+作りは jvdata-store の画面と同じ。処理の管理（Task）・DB の排他（DatabaseLock）・
+停止の規則（Shutdown）は jvdata-store の部品をそのまま使い、取得のコマンドだけ nvstore のものを呼ぶ。
+"""
+
+from __future__ import annotations
+
+import contextlib
+import json
+import sys
+import webbrowser
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+from urllib.request import urlopen
+
+import duckdb
+from jvstore.web.db_lock import DatabaseLock
+from jvstore.web.shutdown import Shutdown
+from jvstore.web.tasks import Task
+
+from ..realtime import parse_day
+from ..sync import SYNC_DATASPECS
+from .table_browser import NvTableBrowser
+
+#: /api/info が名乗る名前。操作パネルはこれで「自分の画面か」を見分ける。
+APP = "nvdata-store"
+
+STATIC = Path(__file__).parent / "static"
+DEFAULT_PORT = 8767
+
+#: 1回の速報の取得で指定できる開催日の数。
+MAX_REALTIME_DAYS = 7
+
+#: 停止の指示。`now` は処理中なら断り、`after_task` は処理が終わってから止める。
+SHUTDOWN_MODES = ("now", "after_task", "cancel")
+
+
+class Backend:
+    def __init__(self, db: Path):
+        self.db = db.resolve()
+        self.task = Task()
+        self.shutdown = Shutdown(self.task)
+        self._lock = DatabaseLock(self.db)
+
+    def info(self):
+        return {"app": APP, "db": str(self.db)}
+
+    def task_status(self):
+        """処理の進み具合。停止を予約していれば、それも画面に伝える。"""
+        return {**self.task.snapshot(), "stop_reserved": self.shutdown.reserved}
+
+    def dataspecs(self):
+        return [{"id": name, "title": title} for name, title in SYNC_DATASPECS]
+
+    def fetch_history(self, years: int, dataspecs: str = "", *, force_setup=False):
+        args = ["sync", "--years", str(years), "--db", str(self.db)]
+        label = f"過去 {years} 年ぶんの取得"
+        if dataspecs:
+            args += ["--dataspec", dataspecs]
+            label += f"（{dataspecs}）"
+        if force_setup:
+            args += ["--force-setup"]
+            label += "（期間を広げて再取得）"
+        return self.task.start(label, [[sys.executable, "-m", "nvstore.cli", *args]], Path.cwd(), db_lock=self._lock)
+
+    def fetch_realtime(self, days: list[str]):
+        """開催日の速報を取得する。``days`` は ``YYYYMMDD`` の並び。"""
+        args = ["realtime", "--db", str(self.db)]
+        for day in days:
+            args += ["--date", day]
+        label = "速報の取得（" + "、".join(f"{day[:4]}-{day[4:6]}-{day[6:]}" for day in days) + "）"
+        return self.task.start(label, [[sys.executable, "-m", "nvstore.cli", *args]], Path.cwd(), db_lock=self._lock)
+
+    def umaconn_setup(self):
+        return self.task.start("UmaConn設定", [[sys.executable, "-m", "nvstore.cli", "setup"]], Path.cwd(), db_lock=self._lock)
+
+    @contextlib.contextmanager
+    def _db(self):
+        # 表一覧と行表示の並行リクエストは順番に処理する。取得中だけ即座に返す。
+        if self.task.snapshot()["running"] or not self._lock.acquire(timeout=15):
+            raise BlockingIOError("取得を実行中です。終了後に一覧を更新してください。")
+        try:
+            yield
+        finally:
+            self._lock.release()
+
+    def history_tables(self, date_from=None, date_to=None):
+        with self._db():
+            if not self.db.exists():
+                return {"db": str(self.db), "ready": False, "tables": []}
+            with duckdb.connect(str(self.db), read_only=True) as con:
+                return {"db": str(self.db), "ready": True, "tables": [
+                    vars(table) for table in NvTableBrowser(con).list_tables(date_from, date_to)
+                ]}
+
+    def history_rows(self, name: str, **options):
+        with self._db():
+            if not self.db.exists():
+                raise FileNotFoundError("データはまだ取得されていません。")
+            with duckdb.connect(str(self.db), read_only=True) as con:
+                return NvTableBrowser(con).read(name, **options)
+
+
+def _one(query, name, default=""):
+    return query.get(name, [default])[0]
+
+
+def make_handler(backend: Backend):
+    class Handler(BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def log_message(self, *args):
+            pass
+
+        def _send(self, body, content_type, status=200):
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def _json(self, data, status=200):
+            self._send(json.dumps(data, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8", status)
+
+        def do_GET(self):
+            url = urlparse(self.path)
+            query = parse_qs(url.query)
+            try:
+                if url.path in ("/", "/index.html"):
+                    return self._send((STATIC / "index.html").read_bytes(), "text/html; charset=utf-8")
+                if url.path == "/api/info":
+                    return self._json(backend.info())
+                if url.path == "/api/task":
+                    return self._json(backend.task_status())
+                if url.path == "/api/dataspecs":
+                    return self._json({"dataspecs": backend.dataspecs()})
+                if url.path == "/api/history/tables":
+                    return self._json(backend.history_tables(_one(query, "from") or None, _one(query, "to") or None))
+                if url.path == "/api/history/rows":
+                    return self._json(backend.history_rows(
+                        _one(query, "name"), limit=int(_one(query, "limit", "50")),
+                        offset=int(_one(query, "offset", "0")),
+                        column_offset=int(_one(query, "column_offset", "0")),
+                        date_from=_one(query, "from") or None, date_to=_one(query, "to") or None))
+                return self._json({"error": "not found"}, 404)
+            except BlockingIOError as error:
+                return self._json({"error": str(error)}, 409)
+            except (ValueError, LookupError) as error:
+                return self._json({"error": str(error)}, 400)
+            except Exception as error:  # noqa: BLE001  画面に理由を返し、サーバは止めない
+                return self._json({"error": str(error)}, 500)
+
+        def do_POST(self):
+            url = urlparse(self.path)
+            query = parse_qs(url.query)
+            if not _is_local_request(self.headers, self.server.server_address[1]):
+                return self._json({"error": "この画面以外からの操作は受け付けません。"}, 403)
+            try:
+                if url.path == "/api/shutdown":
+                    return self._shutdown(_one(query, "when", "now"))
+                if url.path == "/api/umaconn-setup":
+                    return self._json({"started": backend.umaconn_setup()})
+                if url.path == "/api/realtime/fetch":
+                    days = [parse_day(day) for day in query.get("date", [])]
+                    if not 1 <= len(days) <= MAX_REALTIME_DAYS:
+                        raise ValueError(f"開催日を1〜{MAX_REALTIME_DAYS}日で指定してください。")
+                    return self._json({"started": backend.fetch_realtime(days)})
+                if url.path != "/api/history/fetch":
+                    return self._json({"error": "not found"}, 404)
+                return self._json({"started": self._start_history(query)})
+            except ValueError as error:
+                return self._json({"error": str(error)}, 400)
+            except Exception as error:  # noqa: BLE001  画面に理由を返し、サーバは止めない
+                return self._json({"error": str(error)}, 500)
+
+        def _start_history(self, query) -> bool:
+            years = int(_one(query, "years", "10"))
+            if not 1 <= years <= 40:
+                raise ValueError("年数は1〜40の整数で指定してください。")
+            requested = _one(query, "dataspec")
+            known = {spec["id"] for spec in backend.dataspecs()}
+            if requested and not set(requested.split(",")) <= known:
+                raise ValueError("知らないデータ種別です。")
+            force = _one(query, "force_setup", "0")
+            if force not in ("0", "1"):
+                raise ValueError("取得方法の指定が不正です。")
+            return backend.fetch_history(years, requested, force_setup=force == "1")
+
+        def _shutdown(self, when):
+            if when not in SHUTDOWN_MODES:
+                raise ValueError("停止の指定が不正です。")
+            if when == "cancel":
+                backend.shutdown.cancel()
+                return self._json({"stop_reserved": False})
+            if when == "after_task":
+                backend.shutdown.after_task(self.server.shutdown)
+                return self._json({"stop_reserved": True})
+            if backend.shutdown.now(self.server.shutdown):
+                return self._json({"stopped": True})
+            label = backend.task.snapshot()["label"]
+            return self._json({"error": f"「{label}」を実行中のため、停止できません。", "running": label}, 409)
+
+    return Handler
+
+
+def _is_local_request(headers, port):
+    """この画面（127.0.0.1 / localhost の同じポート）から来た操作か。
+
+    よそのサイトを開いたブラウザが、裏でこのサーバーへ停止や取得を送れないようにする。
+    Origin が無いのはブラウザ以外（操作パネル・テスト）からの呼び出し。
+    """
+    host = headers.get("Host", "")
+    if host not in (f"127.0.0.1:{port}", f"localhost:{port}"):
+        return False
+    origin = headers.get("Origin")
+    return origin is None or origin == f"http://{host}"
+
+
+class _Server(ThreadingHTTPServer):
+    allow_reuse_address = False
+
+
+def serve(db: Path, port: int = DEFAULT_PORT, open_browser: bool = False):
+    backend = Backend(db)
+    url = f"http://127.0.0.1:{port}/"
+    try:
+        server = _Server(("127.0.0.1", port), make_handler(backend))
+    except OSError as error:
+        # ダブルクリックの繰り返しでは既存画面を開く。別の保存先は取り違えない。
+        try:
+            with urlopen(url + "api/info", timeout=2) as response:
+                info = json.load(response)
+            same = info.get("app") == APP and Path(info["db"]).resolve() == backend.db
+        except Exception:  # noqa: BLE001  応答が読めなければ別の画面とみなす
+            same = False
+        if not same:
+            raise SystemExit(f"ポート {port} は別の画面で使用中です。--port で変更してください。") from error
+        if open_browser:
+            webbrowser.open(url)
+        print(f"起動済みの画面: {url}")
+        return
+    print(f"地方競馬DATA 取得・管理: {url}", flush=True)
+    print(f"保存先: {backend.db}\n終了するには Ctrl+C", flush=True)
+    if open_browser:
+        webbrowser.open(url)
+    try:
+        # 操作パネルの「停止」（/api/shutdown）でも、ここから抜ける。
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()
+    print("停止しました。", flush=True)

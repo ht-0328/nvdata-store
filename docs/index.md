@@ -39,5 +39,5 @@ JV-Data そのものの読み方は [jvdata-store のドキュメント](https:/
 
 ## 参照編は生成物です
 
-`reference/` の下のレコードのページと索引は、`spec/nv_layouts.json` から `tools/gen_spec_docs.py` で生成しています。
+`reference/` の下のレコードのページと索引は、`src/nvstore/resources/nv_layouts.json` から `tools/gen_spec_docs.py` で生成しています。
 手で直さず、`tools/build_layouts.py` の定義を直してから生成し直してください。

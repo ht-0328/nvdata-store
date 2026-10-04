@@ -14,3 +14,6 @@ site/
 
 # ローカル画面間のデータベース排他
 *.ui.lock
+
+# 動作確認で作った DB とログ
+test-artifacts/
