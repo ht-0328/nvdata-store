@@ -480,12 +480,13 @@ def main() -> int:
     ]
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
+    # 改行は LF に固定する。Windows の既定（CRLF）で書くと、リポジトリの設定（LF）と食い違う。
     out.write_text(json.dumps({
         "version": "UmaConn 3.5.4 で配信された実データ（2026年7月〜10月）",
         "source": "PC-KEIBA テーブル定義書（nvd_*）と実データの照合",
         "layouts": layouts,
         "dataspecs": dataspecs(),
-    }, ensure_ascii=False, indent=1), encoding="utf-8")
+    }, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     for lay in layouts:
         print(f"{lay['record_id']} {lay['title']:<12} {lay['length']:>6} バイト {len(lay['items']):>3} 項目")
     print(f"-> {out}")

@@ -372,9 +372,11 @@ def main() -> int:
         for rid in ds["record_ids"]:
             by_record.setdefault(rid, []).append(ds["id"])
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "index.md").write_text(index_page(spec, by_record), encoding="utf-8")
+    # 改行は LF に固定する。Windows の既定（CRLF）で書くと、リポジトリの設定（LF）と食い違う。
+    (OUT / "index.md").write_text(index_page(spec, by_record), encoding="utf-8", newline="\n")
     for lay in spec["layouts"]:
-        (OUT / f"{lay['record_id']}.md").write_text(record_page(lay, by_record.get(lay["record_id"], [])), encoding="utf-8")
+        page = record_page(lay, by_record.get(lay["record_id"], []))
+        (OUT / f"{lay['record_id']}.md").write_text(page, encoding="utf-8", newline="\n")
         print(f"{lay['record_id']}.md")
     print("index.md")
     return 0
