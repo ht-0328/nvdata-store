@@ -1,0 +1,29 @@
+[project]
+name = "nvdata-store"
+version = "0.1.0"
+description = "地方競馬DATA (UmaConn / NV-Link) のデータを、レコードの表単位で DuckDB に貯める"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # レコードの解釈・DuckDB への書き込み・画面の部品は jvdata-store のものをそのまま使う。
+    # 表の作り方と列名を中央（jvdata.duckdb）と同じにして、keiba-yosou から同じ SQL で読めるようにするため。
+    "jvdata-store @ git+https://github.com/ht-0328/jvdata-store",
+    "duckdb>=1.5.5",
+]
+
+[project.scripts]
+nvstore = "nvstore.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "zensical>=0.0.59"]
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "nvstore"
+source-include = ["src/nvstore/resources/*.json", "src/nvstore/web/static/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
