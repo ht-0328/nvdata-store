@@ -1,0 +1,56 @@
+[project]
+site_name = "地方競馬DATA（NV-Data）の読み方"
+site_description = "地方競馬DATA が UmaConn（NV-Link）経由で配信するデータの仕様を、実データで確かめながらまとめたドキュメント"
+
+nav = [
+  { "地方競馬DATA の読み方" = "index.md" },
+  { "解説" = [
+    { "01 地方競馬DATA の全体像" = "01-overview.md" },
+    { "02 レコードの読み方" = "02-record-format.md" },
+    { "03 データ種別と提供範囲" = "03-dataspecs.md" },
+    { "04 レコードのつながり" = "04-relations.md" },
+    { "05 NV-Link の呼び方" = "05-nvlink-interface.md" },
+  ] },
+  { "参照" = [
+    { "レコード索引" = "reference/index.md" },
+    { "地方特有のコード値" = "reference/codes.md" },
+    { "地方だけのレコード" = [
+      { "NU 競走馬マスタ地方" = "reference/NU.md" },
+      { "NK 騎手マスタ地方" = "reference/NK.md" },
+      { "NC 調教師マスタ地方" = "reference/NC.md" },
+      { "NN 馬主マスタ地方" = "reference/NN.md" },
+      { "NB 生産者マスタ地方" = "reference/NB.md" },
+      { "ND 出走別着度数地方" = "reference/ND.md" },
+      { "HA 票数A（枠単）" = "reference/HA.md" },
+      { "OA オッズA（枠単）" = "reference/OA.md" },
+    ] },
+    { "JV-Data と中身が違うレコード" = [
+      { "HR 払戻" = "reference/HR.md" },
+      { "WF 重勝式" = "reference/WF.md" },
+    ] },
+  ] },
+]
+
+[project.theme]
+language = "ja"
+features = [
+  "content.code.copy",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.sections",
+  "navigation.top",
+  "search.highlight",
+  "toc.follow",
+]
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+tables = {}
+toc.permalink = true
+toc.title = "このページの内容"
+pymdownx.details = {}
+pymdownx.superfences = {}
