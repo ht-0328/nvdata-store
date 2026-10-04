@@ -1,0 +1,6803 @@
+{
+ "version": "UmaConn 3.5.4 で配信された実データ（2026年7月〜10月）",
+ "source": "PC-KEIBA テーブル定義書（nvd_*）と実データの照合",
+ "layouts": [
+  {
+   "index": "NV-1",
+   "title": "競走馬マスタ地方",
+   "record_id": "NU",
+   "length": 1492,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "血統登録番号",
+     "offset": 11,
+     "size": 10,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "生年4桁＋品種1桁＋数字5桁。ばんえい（品種 B）は生年と一致せず5桁目が 2"
+    },
+    {
+     "no": "5",
+     "name": "競走馬抹消区分",
+     "offset": 21,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "0:現役 1:抹消"
+    },
+    {
+     "no": "6",
+     "name": "競走馬登録年月日",
+     "offset": 22,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd。観測した範囲では 00000000"
+    },
+    {
+     "no": "7",
+     "name": "競走馬抹消年月日",
+     "offset": 30,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "8",
+     "name": "生年月日",
+     "offset": 38,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "9",
+     "name": "馬名",
+     "offset": 46,
+     "size": 36,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角18文字"
+    },
+    {
+     "no": "10",
+     "name": "馬名半角ｶﾅ",
+     "offset": 82,
+     "size": 36,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "半角36文字"
+    },
+    {
+     "no": "11",
+     "name": "馬名欧字",
+     "offset": 118,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では空"
+    },
+    {
+     "no": "12",
+     "name": "在厩フラグ",
+     "offset": 178,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の JRA施設在きゅうフラグ の位置。0 または 1"
+    },
+    {
+     "no": "13",
+     "name": "予備",
+     "offset": 179,
+     "size": 19,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "14",
+     "name": "馬記号コード",
+     "offset": 198,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2204.馬記号コード>参照。観測した範囲では 00"
+    },
+    {
+     "no": "15",
+     "name": "性別コード",
+     "offset": 200,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2202.性別コード>参照"
+    },
+    {
+     "no": "16",
+     "name": "品種コード",
+     "offset": 201,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2201.品種コード>参照。ばんえいは B"
+    },
+    {
+     "no": "17",
+     "name": "毛色コード",
+     "offset": 202,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2203.毛色コード>参照"
+    },
+    {
+     "no": "18",
+     "name": "3代血統情報",
+     "offset": 204,
+     "size": 46,
+     "repeat": 14,
+     "is_key": false,
+     "default": "",
+     "comment": "父･母･父父･父母･母父･母母･父父父･父父母･父母父･父母母･母父父･母父母･母母父･母母母の順（JV-Data と同じ）。ばんえいは3代目以降の馬名が空",
+     "children": [
+      {
+       "no": "18a",
+       "name": "繁殖登録番号",
+       "offset": 0,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "18b",
+       "name": "馬名",
+       "offset": 10,
+       "size": 36,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "19",
+     "name": "東西所属コード",
+     "offset": 848,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2301.東西所属コード>参照。地方所属は 3"
+    },
+    {
+     "no": "20",
+     "name": "調教師コード",
+     "offset": 849,
+     "size": 5,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NC 調教師マスタ地方へリンク"
+    },
+    {
+     "no": "21",
+     "name": "調教師名略称",
+     "offset": 854,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角4文字"
+    },
+    {
+     "no": "22",
+     "name": "招待地域名",
+     "offset": 862,
+     "size": 20,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "地方では所属（大井・名古屋・ばんえい など）が入る"
+    },
+    {
+     "no": "23",
+     "name": "生産者コード",
+     "offset": 882,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NB 生産者マスタ地方へリンク。6桁のコードの後ろに 00 を付けた形で、先頭6桁で NB・ND と結ぶ。00000000 が多い"
+    },
+    {
+     "no": "24",
+     "name": "生産者名(法人格無)",
+     "offset": 890,
+     "size": 72,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "25",
+     "name": "産地名",
+     "offset": 962,
+     "size": 20,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "26",
+     "name": "馬主コード",
+     "offset": 982,
+     "size": 6,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NN 馬主マスタ地方へリンク。000000 が多い"
+    },
+    {
+     "no": "27",
+     "name": "馬主名(法人格無)",
+     "offset": 988,
+     "size": 64,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "28",
+     "name": "本賞金累計",
+     "offset": 1052,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "29",
+     "name": "付加賞金累計",
+     "offset": 1061,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "30",
+     "name": "収得賞金累計",
+     "offset": 1070,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "31",
+     "name": "総合着回数",
+     "offset": 1079,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "32",
+     "name": "地方合計着回数",
+     "offset": 1097,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の 中央合計着回数 の位置。地方のみの1着〜5着・着外の回数"
+    },
+    {
+     "no": "33",
+     "name": "芝直・着回数",
+     "offset": 1115,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "34",
+     "name": "芝右・着回数",
+     "offset": 1133,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "35",
+     "name": "芝左・着回数",
+     "offset": 1151,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "36",
+     "name": "ダ直・着回数",
+     "offset": 1169,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "37",
+     "name": "ダ右・着回数",
+     "offset": 1187,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "38",
+     "name": "ダ左・着回数",
+     "offset": 1205,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "39",
+     "name": "芝良・着回数",
+     "offset": 1223,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "40",
+     "name": "芝稍・着回数",
+     "offset": 1241,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "41",
+     "name": "芝重・着回数",
+     "offset": 1259,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "42",
+     "name": "芝不・着回数",
+     "offset": 1277,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "43",
+     "name": "ダ良・着回数",
+     "offset": 1295,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "44",
+     "name": "ダ稍・着回数",
+     "offset": 1313,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "45",
+     "name": "ダ重・着回数",
+     "offset": 1331,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "46",
+     "name": "ダ不・着回数",
+     "offset": 1349,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "47",
+     "name": "芝16下・着回数",
+     "offset": 1367,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "48",
+     "name": "芝22下・着回数",
+     "offset": 1385,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "49",
+     "name": "芝22超・着回数",
+     "offset": 1403,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "50",
+     "name": "ダ16下・着回数",
+     "offset": 1421,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "51",
+     "name": "ダ22下・着回数",
+     "offset": 1439,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "52",
+     "name": "ダ22超・着回数",
+     "offset": 1457,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "53",
+     "name": "脚質傾向",
+     "offset": 1475,
+     "size": 3,
+     "repeat": 4,
+     "is_key": false,
+     "default": "",
+     "comment": "逃げ回数、先行回数、差し回数、追込回数。観測した範囲では 0"
+    },
+    {
+     "no": "54",
+     "name": "登録レース数",
+     "offset": 1487,
+     "size": 3,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では 000"
+    },
+    {
+     "no": "55",
+     "name": "レコード区切",
+     "offset": 1490,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-2",
+   "title": "騎手マスタ地方",
+   "record_id": "NK",
+   "length": 5529,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "騎手コード",
+     "offset": 11,
+     "size": 5,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "5",
+     "name": "騎手抹消区分",
+     "offset": 16,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "0:現役 1:抹消"
+    },
+    {
+     "no": "6",
+     "name": "騎手免許交付年月日",
+     "offset": 17,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "7",
+     "name": "騎手免許抹消年月日",
+     "offset": 25,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "8",
+     "name": "生年月日",
+     "offset": 33,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "9",
+     "name": "騎手名",
+     "offset": 41,
+     "size": 34,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角17文字"
+    },
+    {
+     "no": "10",
+     "name": "予備",
+     "offset": 75,
+     "size": 34,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "11",
+     "name": "騎手名半角ｶﾅ",
+     "offset": 109,
+     "size": 30,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "12",
+     "name": "騎手名略称",
+     "offset": 139,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角4文字"
+    },
+    {
+     "no": "13",
+     "name": "騎手名欧字",
+     "offset": 147,
+     "size": 80,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "14",
+     "name": "性別区分",
+     "offset": 227,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "1:男性 2:女性"
+    },
+    {
+     "no": "15",
+     "name": "騎乗資格コード",
+     "offset": 228,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2302.騎乗資格コード>参照。観測した範囲では 2"
+    },
+    {
+     "no": "16",
+     "name": "騎手見習コード",
+     "offset": 229,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2303.騎手見習コード>参照。観測した範囲では 0"
+    },
+    {
+     "no": "17",
+     "name": "騎手東西所属コード",
+     "offset": 230,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2301.東西所属コード>参照。地方所属は 3"
+    },
+    {
+     "no": "18",
+     "name": "招待地域名",
+     "offset": 231,
+     "size": 20,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "地方では所属（大井・名古屋・ばんえい など）が入る"
+    },
+    {
+     "no": "19",
+     "name": "所属調教師コード",
+     "offset": 251,
+     "size": 5,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "フリーは 00000"
+    },
+    {
+     "no": "20",
+     "name": "所属調教師名略称",
+     "offset": 256,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "21",
+     "name": "服色標示（画像取得用）",
+     "offset": 264,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "勝負服の色・模様。「緑，黒縦縞，…」のような区切り付きの表記"
+    },
+    {
+     "no": "22",
+     "name": "服色標示（文字表示用）",
+     "offset": 324,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "勝負服の色・模様。「胴緑・黒縦じま、袖…」のような読む人向けの表記"
+    },
+    {
+     "no": "23",
+     "name": "初騎乗情報",
+     "offset": 384,
+     "size": 67,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の KS と同じ並び",
+     "children": [
+      {
+       "no": "23a",
+       "name": "年月日場回日R",
+       "offset": 0,
+       "size": 16,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "23b",
+       "name": "出走頭数",
+       "offset": 16,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "23c",
+       "name": "血統登録番号",
+       "offset": 18,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "23d",
+       "name": "馬名",
+       "offset": 28,
+       "size": 36,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "23e",
+       "name": "確定着順",
+       "offset": 64,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "23f",
+       "name": "異常区分コード",
+       "offset": 66,
+       "size": 1,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "24",
+     "name": "初勝利情報",
+     "offset": 518,
+     "size": 64,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の KS と同じ並び",
+     "children": [
+      {
+       "no": "24a",
+       "name": "年月日場回日R",
+       "offset": 0,
+       "size": 16,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "24b",
+       "name": "出走頭数",
+       "offset": 16,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "24c",
+       "name": "血統登録番号",
+       "offset": 18,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "24d",
+       "name": "馬名",
+       "offset": 28,
+       "size": 36,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "25",
+     "name": "最近重賞勝利情報",
+     "offset": 646,
+     "size": 163,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の KS と同じ並び。観測した範囲では空",
+     "children": [
+      {
+       "no": "25a",
+       "name": "年月日場回日R",
+       "offset": 0,
+       "size": 16,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25b",
+       "name": "競走名本題",
+       "offset": 16,
+       "size": 60,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25c",
+       "name": "競走名略称10文字",
+       "offset": 76,
+       "size": 20,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25d",
+       "name": "競走名略称6文字",
+       "offset": 96,
+       "size": 12,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25e",
+       "name": "競走名略称3文字",
+       "offset": 108,
+       "size": 6,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25f",
+       "name": "グレードコード",
+       "offset": 114,
+       "size": 1,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25g",
+       "name": "出走頭数",
+       "offset": 115,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25h",
+       "name": "血統登録番号",
+       "offset": 117,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "25i",
+       "name": "馬名",
+       "offset": 127,
+       "size": 36,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "26",
+     "name": "本年･前年･累計成績情報",
+     "offset": 1135,
+     "size": 1464,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・前年・累計の順",
+     "children": [
+      {
+       "no": "26a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年･前年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "26b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "26c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "26d",
+       "name": "合計着回数",
+       "offset": 24,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "全競馬場の合計。1着〜5着・着外の回数"
+      },
+      {
+       "no": "26e",
+       "name": "門別着回数",
+       "offset": 60,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26f",
+       "name": "北見着回数",
+       "offset": 96,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26g",
+       "name": "岩見沢着回数",
+       "offset": 132,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26h",
+       "name": "帯広着回数",
+       "offset": 168,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26i",
+       "name": "旭川着回数",
+       "offset": 204,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26j",
+       "name": "盛岡着回数",
+       "offset": 240,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26k",
+       "name": "水沢着回数",
+       "offset": 276,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26l",
+       "name": "上山着回数",
+       "offset": 312,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26m",
+       "name": "三条着回数",
+       "offset": 348,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26n",
+       "name": "足利着回数",
+       "offset": 384,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26o",
+       "name": "宇都宮着回数",
+       "offset": 420,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26p",
+       "name": "高崎着回数",
+       "offset": 456,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26q",
+       "name": "浦和着回数",
+       "offset": 492,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26r",
+       "name": "船橋着回数",
+       "offset": 528,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26s",
+       "name": "大井着回数",
+       "offset": 564,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26t",
+       "name": "川崎着回数",
+       "offset": 600,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26u",
+       "name": "金沢着回数",
+       "offset": 636,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26v",
+       "name": "笠松着回数",
+       "offset": 672,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26w",
+       "name": "名古屋着回数",
+       "offset": 708,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26x",
+       "name": "紀三井寺着回数",
+       "offset": 744,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26y",
+       "name": "園田着回数",
+       "offset": 780,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26z",
+       "name": "姫路着回数",
+       "offset": 816,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26a",
+       "name": "益田着回数",
+       "offset": 852,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26b",
+       "name": "福山着回数",
+       "offset": 888,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26c",
+       "name": "高知着回数",
+       "offset": 924,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26d",
+       "name": "佐賀着回数",
+       "offset": 960,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26e",
+       "name": "荒尾着回数",
+       "offset": 996,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26f",
+       "name": "中津着回数",
+       "offset": 1032,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26g",
+       "name": "札幌着回数",
+       "offset": 1068,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26h",
+       "name": "函館着回数",
+       "offset": 1104,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26i",
+       "name": "新潟着回数",
+       "offset": 1140,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26j",
+       "name": "中京着回数",
+       "offset": 1176,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26k",
+       "name": "春木着回数",
+       "offset": 1212,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26l",
+       "name": "芝16下・着回数",
+       "offset": 1248,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26m",
+       "name": "芝22下・着回数",
+       "offset": 1284,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26n",
+       "name": "芝22超・着回数",
+       "offset": 1320,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26o",
+       "name": "ダ16下・着回数",
+       "offset": 1356,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26p",
+       "name": "ダ22下・着回数",
+       "offset": 1392,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "26q",
+       "name": "ダ22超・着回数",
+       "offset": 1428,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      }
+     ]
+    },
+    {
+     "no": "27",
+     "name": "レコード区切",
+     "offset": 5527,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-3",
+   "title": "調教師マスタ地方",
+   "record_id": "NC",
+   "length": 5098,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "調教師コード",
+     "offset": 11,
+     "size": 5,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "5",
+     "name": "調教師抹消区分",
+     "offset": 16,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "0:現役 1:抹消"
+    },
+    {
+     "no": "6",
+     "name": "調教師免許交付年月日",
+     "offset": 17,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "7",
+     "name": "調教師免許抹消年月日",
+     "offset": 25,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "8",
+     "name": "生年月日",
+     "offset": 33,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "yyyymmdd"
+    },
+    {
+     "no": "9",
+     "name": "調教師名",
+     "offset": 41,
+     "size": 34,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角17文字"
+    },
+    {
+     "no": "10",
+     "name": "調教師名半角ｶﾅ",
+     "offset": 75,
+     "size": 30,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "11",
+     "name": "調教師名略称",
+     "offset": 105,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角4文字"
+    },
+    {
+     "no": "12",
+     "name": "調教師名欧字",
+     "offset": 113,
+     "size": 80,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "13",
+     "name": "性別区分",
+     "offset": 193,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "1:男性 2:女性"
+    },
+    {
+     "no": "14",
+     "name": "調教師東西所属コード",
+     "offset": 194,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "<コード表 2301.東西所属コード>参照。地方所属は 3"
+    },
+    {
+     "no": "15",
+     "name": "招待地域名",
+     "offset": 195,
+     "size": 20,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "地方では所属（大井・名古屋・ばんえい など）が入る"
+    },
+    {
+     "no": "16",
+     "name": "最近重賞勝利情報",
+     "offset": 215,
+     "size": 163,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の CH と同じ並び。観測した範囲では空",
+     "children": [
+      {
+       "no": "16a",
+       "name": "年月日場回日R",
+       "offset": 0,
+       "size": 16,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16b",
+       "name": "競走名本題",
+       "offset": 16,
+       "size": 60,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16c",
+       "name": "競走名略称10文字",
+       "offset": 76,
+       "size": 20,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16d",
+       "name": "競走名略称6文字",
+       "offset": 96,
+       "size": 12,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16e",
+       "name": "競走名略称3文字",
+       "offset": 108,
+       "size": 6,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16f",
+       "name": "グレードコード",
+       "offset": 114,
+       "size": 1,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16g",
+       "name": "出走頭数",
+       "offset": 115,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16h",
+       "name": "血統登録番号",
+       "offset": 117,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "16i",
+       "name": "馬名",
+       "offset": 127,
+       "size": 36,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "17",
+     "name": "本年･前年･累計成績情報",
+     "offset": 704,
+     "size": 1464,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・前年・累計の順",
+     "children": [
+      {
+       "no": "17a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年･前年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "17b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "17c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "17d",
+       "name": "合計着回数",
+       "offset": 24,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "全競馬場の合計。1着〜5着・着外の回数"
+      },
+      {
+       "no": "17e",
+       "name": "門別着回数",
+       "offset": 60,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17f",
+       "name": "北見着回数",
+       "offset": 96,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17g",
+       "name": "岩見沢着回数",
+       "offset": 132,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17h",
+       "name": "帯広着回数",
+       "offset": 168,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17i",
+       "name": "旭川着回数",
+       "offset": 204,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17j",
+       "name": "盛岡着回数",
+       "offset": 240,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17k",
+       "name": "水沢着回数",
+       "offset": 276,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17l",
+       "name": "上山着回数",
+       "offset": 312,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17m",
+       "name": "三条着回数",
+       "offset": 348,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17n",
+       "name": "足利着回数",
+       "offset": 384,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17o",
+       "name": "宇都宮着回数",
+       "offset": 420,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17p",
+       "name": "高崎着回数",
+       "offset": 456,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17q",
+       "name": "浦和着回数",
+       "offset": 492,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17r",
+       "name": "船橋着回数",
+       "offset": 528,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17s",
+       "name": "大井着回数",
+       "offset": 564,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17t",
+       "name": "川崎着回数",
+       "offset": 600,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17u",
+       "name": "金沢着回数",
+       "offset": 636,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17v",
+       "name": "笠松着回数",
+       "offset": 672,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17w",
+       "name": "名古屋着回数",
+       "offset": 708,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17x",
+       "name": "紀三井寺着回数",
+       "offset": 744,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17y",
+       "name": "園田着回数",
+       "offset": 780,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17z",
+       "name": "姫路着回数",
+       "offset": 816,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17a",
+       "name": "益田着回数",
+       "offset": 852,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17b",
+       "name": "福山着回数",
+       "offset": 888,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17c",
+       "name": "高知着回数",
+       "offset": 924,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17d",
+       "name": "佐賀着回数",
+       "offset": 960,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17e",
+       "name": "荒尾着回数",
+       "offset": 996,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17f",
+       "name": "中津着回数",
+       "offset": 1032,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17g",
+       "name": "札幌着回数",
+       "offset": 1068,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17h",
+       "name": "函館着回数",
+       "offset": 1104,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17i",
+       "name": "新潟着回数",
+       "offset": 1140,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17j",
+       "name": "中京着回数",
+       "offset": 1176,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17k",
+       "name": "春木着回数",
+       "offset": 1212,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17l",
+       "name": "芝16下・着回数",
+       "offset": 1248,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17m",
+       "name": "芝22下・着回数",
+       "offset": 1284,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17n",
+       "name": "芝22超・着回数",
+       "offset": 1320,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17o",
+       "name": "ダ16下・着回数",
+       "offset": 1356,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17p",
+       "name": "ダ22下・着回数",
+       "offset": 1392,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "17q",
+       "name": "ダ22超・着回数",
+       "offset": 1428,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      }
+     ]
+    },
+    {
+     "no": "18",
+     "name": "レコード区切",
+     "offset": 5096,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-4",
+   "title": "馬主マスタ地方",
+   "record_id": "NN",
+   "length": 709,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "馬主コード",
+     "offset": 11,
+     "size": 6,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "000000 が多いので、馬主名(法人格無) と合わせて1件を決める"
+    },
+    {
+     "no": "5",
+     "name": "馬主名(法人格有)",
+     "offset": 17,
+     "size": 64,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "6",
+     "name": "馬主名(法人格無)",
+     "offset": 81,
+     "size": 64,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "7",
+     "name": "馬主名半角ｶﾅ",
+     "offset": 145,
+     "size": 50,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "馬主コードが 000000 のときは空"
+    },
+    {
+     "no": "8",
+     "name": "馬主名欧字",
+     "offset": 195,
+     "size": 100,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "馬主コードが 000000 のときは空"
+    },
+    {
+     "no": "9",
+     "name": "服色標示",
+     "offset": 295,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data と同じ表記"
+    },
+    {
+     "no": "10",
+     "name": "服色標示 ホッカイドウ（画像取得用）",
+     "offset": 355,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲ではほとんど空"
+    },
+    {
+     "no": "11",
+     "name": "服色標示 ホッカイドウ（文字表示用）",
+     "offset": 415,
+     "size": 60,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では空"
+    },
+    {
+     "no": "12",
+     "name": "本年･累計成績情報",
+     "offset": 475,
+     "size": 116,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "12a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "12b",
+       "name": "平地本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "12c",
+       "name": "障害本賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "12d",
+       "name": "平地付加賞金合計",
+       "offset": 24,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "12e",
+       "name": "障害付加賞金合計",
+       "offset": 34,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "12f",
+       "name": "平地着回数",
+       "offset": 44,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "12g",
+       "name": "障害着回数",
+       "offset": 80,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "観測した範囲では 0"
+      }
+     ]
+    },
+    {
+     "no": "13",
+     "name": "レコード区切",
+     "offset": 707,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-5",
+   "title": "生産者マスタ地方",
+   "record_id": "NB",
+   "length": 649,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "生産者コード",
+     "offset": 11,
+     "size": 6,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "000000 が多いので、生産者名(法人格無) と合わせて1件を決める"
+    },
+    {
+     "no": "5",
+     "name": "生産者名(法人格有)",
+     "offset": 17,
+     "size": 70,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "外国の生産者は欧字の名前がここに入る"
+    },
+    {
+     "no": "6",
+     "name": "生産者名(法人格無)",
+     "offset": 87,
+     "size": 70,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "7",
+     "name": "生産者名半角ｶﾅ",
+     "offset": 157,
+     "size": 70,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では空"
+    },
+    {
+     "no": "8",
+     "name": "生産者名欧字",
+     "offset": 227,
+     "size": 168,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では空"
+    },
+    {
+     "no": "9",
+     "name": "生産者住所自治省名",
+     "offset": 395,
+     "size": 20,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "10",
+     "name": "本年･累計成績情報",
+     "offset": 415,
+     "size": 116,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "10a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "10b",
+       "name": "平地本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "10c",
+       "name": "障害本賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "10d",
+       "name": "平地付加賞金合計",
+       "offset": 24,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "10e",
+       "name": "障害付加賞金合計",
+       "offset": 34,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。観測した範囲では 0"
+      },
+      {
+       "no": "10f",
+       "name": "平地着回数",
+       "offset": 44,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      },
+      {
+       "no": "10g",
+       "name": "障害着回数",
+       "offset": 80,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "観測した範囲では 0"
+      }
+     ]
+    },
+    {
+     "no": "11",
+     "name": "レコード区切",
+     "offset": 647,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-6",
+   "title": "出走別着度数地方",
+   "record_id": "ND",
+   "length": 8179,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "開催年",
+     "offset": 11,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行年 西暦4桁 yyyy形式"
+    },
+    {
+     "no": "5",
+     "name": "開催月日",
+     "offset": 15,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行月日 各2桁 mmdd形式"
+    },
+    {
+     "no": "6",
+     "name": "競馬場コード",
+     "offset": 19,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "<コード表 2001.競馬場コード>参照。地方は 30〜57。ばんえい帯広は 83"
+    },
+    {
+     "no": "7",
+     "name": "開催回[第N回]",
+     "offset": 21,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行回"
+    },
+    {
+     "no": "8",
+     "name": "開催日目[N日目]",
+     "offset": 23,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行日目"
+    },
+    {
+     "no": "9",
+     "name": "レース番号",
+     "offset": 25,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース番号"
+    },
+    {
+     "no": "10",
+     "name": "血統登録番号",
+     "offset": 27,
+     "size": 10,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "NU 競走馬マスタ地方へリンク"
+    },
+    {
+     "no": "11",
+     "name": "馬名",
+     "offset": 37,
+     "size": 36,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "全角18文字"
+    },
+    {
+     "no": "12",
+     "name": "平地本賞金累計",
+     "offset": 73,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "13",
+     "name": "平地付加賞金累計",
+     "offset": 82,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "14",
+     "name": "平地収得賞金累計",
+     "offset": 91,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "単位：百円"
+    },
+    {
+     "no": "15",
+     "name": "総合着回数",
+     "offset": 100,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "16",
+     "name": "地方合計着回数",
+     "offset": 118,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "17",
+     "name": "芝直・着回数",
+     "offset": 136,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "18",
+     "name": "芝右・着回数",
+     "offset": 154,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "19",
+     "name": "芝左・着回数",
+     "offset": 172,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "20",
+     "name": "ダ直・着回数",
+     "offset": 190,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "21",
+     "name": "ダ右・着回数",
+     "offset": 208,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "22",
+     "name": "ダ左・着回数",
+     "offset": 226,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "23",
+     "name": "芝良・着回数",
+     "offset": 244,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "24",
+     "name": "芝稍・着回数",
+     "offset": 262,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "25",
+     "name": "芝重・着回数",
+     "offset": 280,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "26",
+     "name": "芝不・着回数",
+     "offset": 298,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "27",
+     "name": "ダ良・着回数",
+     "offset": 316,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "28",
+     "name": "ダ稍・着回数",
+     "offset": 334,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "29",
+     "name": "ダ重・着回数",
+     "offset": 352,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "30",
+     "name": "ダ不・着回数",
+     "offset": 370,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "31",
+     "name": "芝1000以下・着回数",
+     "offset": 388,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "32",
+     "name": "芝1001-1200・着回数",
+     "offset": 406,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "33",
+     "name": "芝1201-1300・着回数",
+     "offset": 424,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "34",
+     "name": "芝1301-1400・着回数",
+     "offset": 442,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "35",
+     "name": "芝1401-1500・着回数",
+     "offset": 460,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "36",
+     "name": "芝1501-1600・着回数",
+     "offset": 478,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "37",
+     "name": "芝1601-1700・着回数",
+     "offset": 496,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "38",
+     "name": "芝1701-1800・着回数",
+     "offset": 514,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "39",
+     "name": "芝1801-2000・着回数",
+     "offset": 532,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "40",
+     "name": "芝2001-2200・着回数",
+     "offset": 550,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "41",
+     "name": "芝2201以上・着回数",
+     "offset": 568,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "42",
+     "name": "ダ1000以下・着回数",
+     "offset": 586,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "43",
+     "name": "ダ1001-1200・着回数",
+     "offset": 604,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "44",
+     "name": "ダ1201-1300・着回数",
+     "offset": 622,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "45",
+     "name": "ダ1301-1400・着回数",
+     "offset": 640,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "46",
+     "name": "ダ1401-1500・着回数",
+     "offset": 658,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "47",
+     "name": "ダ1501-1600・着回数",
+     "offset": 676,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "48",
+     "name": "ダ1601-1700・着回数",
+     "offset": 694,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "49",
+     "name": "ダ1701-1800・着回数",
+     "offset": 712,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "50",
+     "name": "ダ1801-2000・着回数",
+     "offset": 730,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "51",
+     "name": "ダ2001-2200・着回数",
+     "offset": 748,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "52",
+     "name": "ダ2201以上・着回数",
+     "offset": 766,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "53",
+     "name": "盛岡芝・着回数",
+     "offset": 784,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "54",
+     "name": "札幌芝・着回数",
+     "offset": 802,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "55",
+     "name": "函館芝・着回数",
+     "offset": 820,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "56",
+     "name": "新潟芝・着回数",
+     "offset": 838,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "57",
+     "name": "中京芝・着回数",
+     "offset": 856,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "58",
+     "name": "門別ダ・着回数",
+     "offset": 874,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "59",
+     "name": "北見ダ・着回数",
+     "offset": 892,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "60",
+     "name": "岩見沢ダ・着回数",
+     "offset": 910,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "61",
+     "name": "帯広ダ・着回数",
+     "offset": 928,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "62",
+     "name": "旭川ダ・着回数",
+     "offset": 946,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "63",
+     "name": "盛岡ダ・着回数",
+     "offset": 964,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "64",
+     "name": "水沢ダ・着回数",
+     "offset": 982,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "65",
+     "name": "上山ダ・着回数",
+     "offset": 1000,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "66",
+     "name": "三条ダ・着回数",
+     "offset": 1018,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "67",
+     "name": "足利ダ・着回数",
+     "offset": 1036,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "68",
+     "name": "宇都宮ダ・着回数",
+     "offset": 1054,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "69",
+     "name": "高崎ダ・着回数",
+     "offset": 1072,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "70",
+     "name": "浦和ダ・着回数",
+     "offset": 1090,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "71",
+     "name": "船橋ダ・着回数",
+     "offset": 1108,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "72",
+     "name": "大井ダ・着回数",
+     "offset": 1126,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "73",
+     "name": "川崎ダ・着回数",
+     "offset": 1144,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "74",
+     "name": "金沢ダ・着回数",
+     "offset": 1162,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "75",
+     "name": "笠松ダ・着回数",
+     "offset": 1180,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "76",
+     "name": "名古屋ダ・着回数",
+     "offset": 1198,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "77",
+     "name": "紀三井寺ダ・着回数",
+     "offset": 1216,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "78",
+     "name": "園田ダ・着回数",
+     "offset": 1234,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "79",
+     "name": "姫路ダ・着回数",
+     "offset": 1252,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "80",
+     "name": "益田ダ・着回数",
+     "offset": 1270,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "81",
+     "name": "福山ダ・着回数",
+     "offset": 1288,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "82",
+     "name": "高知ダ・着回数",
+     "offset": 1306,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "83",
+     "name": "佐賀ダ・着回数",
+     "offset": 1324,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "84",
+     "name": "荒尾ダ・着回数",
+     "offset": 1342,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "85",
+     "name": "中津ダ・着回数",
+     "offset": 1360,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "86",
+     "name": "札幌ダ・着回数",
+     "offset": 1378,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "87",
+     "name": "函館ダ・着回数",
+     "offset": 1396,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "88",
+     "name": "新潟ダ・着回数",
+     "offset": 1414,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "89",
+     "name": "中京ダ・着回数",
+     "offset": 1432,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "90",
+     "name": "春木ダ・着回数",
+     "offset": 1450,
+     "size": 3,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "1着〜5着・着外(6着以下)の回数"
+    },
+    {
+     "no": "91",
+     "name": "脚質傾向",
+     "offset": 1468,
+     "size": 3,
+     "repeat": 4,
+     "is_key": false,
+     "default": "",
+     "comment": "逃げ回数、先行回数、差し回数、追込回数。観測した範囲では 0"
+    },
+    {
+     "no": "92",
+     "name": "登録レース数",
+     "offset": 1480,
+     "size": 3,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "観測した範囲では 000"
+    },
+    {
+     "no": "93",
+     "name": "騎手コード",
+     "offset": 1483,
+     "size": 5,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NK 騎手マスタ地方へリンク"
+    },
+    {
+     "no": "94",
+     "name": "騎手名",
+     "offset": 1488,
+     "size": 34,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "95",
+     "name": "騎手本年･累計成績情報",
+     "offset": 1522,
+     "size": 1524,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "95a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "95b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。調教師では観測した範囲で 0"
+      },
+      {
+       "no": "95c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "95d",
+       "name": "芝着回数",
+       "offset": 24,
+       "size": 5,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外の回数"
+      },
+      {
+       "no": "95e",
+       "name": "ダート着回数",
+       "offset": 54,
+       "size": 5,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外の回数"
+      },
+      {
+       "no": "95f",
+       "name": "芝1000以下・着回数",
+       "offset": 84,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95g",
+       "name": "芝1001-1200・着回数",
+       "offset": 108,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95h",
+       "name": "芝1201-1300・着回数",
+       "offset": 132,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95i",
+       "name": "芝1301-1400・着回数",
+       "offset": 156,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95j",
+       "name": "芝1401-1500・着回数",
+       "offset": 180,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95k",
+       "name": "芝1501-1600・着回数",
+       "offset": 204,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95l",
+       "name": "芝1601-1700・着回数",
+       "offset": 228,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95m",
+       "name": "芝1701-1800・着回数",
+       "offset": 252,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95n",
+       "name": "芝1801-2000・着回数",
+       "offset": 276,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95o",
+       "name": "芝2001-2200・着回数",
+       "offset": 300,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95p",
+       "name": "芝2201以上・着回数",
+       "offset": 324,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95q",
+       "name": "ダ1000以下・着回数",
+       "offset": 348,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95r",
+       "name": "ダ1001-1200・着回数",
+       "offset": 372,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95s",
+       "name": "ダ1201-1300・着回数",
+       "offset": 396,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95t",
+       "name": "ダ1301-1400・着回数",
+       "offset": 420,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95u",
+       "name": "ダ1401-1500・着回数",
+       "offset": 444,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95v",
+       "name": "ダ1501-1600・着回数",
+       "offset": 468,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95w",
+       "name": "ダ1601-1700・着回数",
+       "offset": 492,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95x",
+       "name": "ダ1701-1800・着回数",
+       "offset": 516,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95y",
+       "name": "ダ1801-2000・着回数",
+       "offset": 540,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95z",
+       "name": "ダ2001-2200・着回数",
+       "offset": 564,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95a",
+       "name": "ダ2201以上・着回数",
+       "offset": 588,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95b",
+       "name": "盛岡芝・着回数",
+       "offset": 612,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95c",
+       "name": "札幌芝・着回数",
+       "offset": 636,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95d",
+       "name": "函館芝・着回数",
+       "offset": 660,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95e",
+       "name": "新潟芝・着回数",
+       "offset": 684,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95f",
+       "name": "中京芝・着回数",
+       "offset": 708,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95g",
+       "name": "門別ダ・着回数",
+       "offset": 732,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95h",
+       "name": "北見ダ・着回数",
+       "offset": 756,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95i",
+       "name": "岩見沢ダ・着回数",
+       "offset": 780,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95j",
+       "name": "帯広ダ・着回数",
+       "offset": 804,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95k",
+       "name": "旭川ダ・着回数",
+       "offset": 828,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95l",
+       "name": "盛岡ダ・着回数",
+       "offset": 852,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95m",
+       "name": "水沢ダ・着回数",
+       "offset": 876,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95n",
+       "name": "上山ダ・着回数",
+       "offset": 900,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95o",
+       "name": "三条ダ・着回数",
+       "offset": 924,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95p",
+       "name": "足利ダ・着回数",
+       "offset": 948,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95q",
+       "name": "宇都宮ダ・着回数",
+       "offset": 972,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95r",
+       "name": "高崎ダ・着回数",
+       "offset": 996,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95s",
+       "name": "浦和ダ・着回数",
+       "offset": 1020,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95t",
+       "name": "船橋ダ・着回数",
+       "offset": 1044,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95u",
+       "name": "大井ダ・着回数",
+       "offset": 1068,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95v",
+       "name": "川崎ダ・着回数",
+       "offset": 1092,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95w",
+       "name": "金沢ダ・着回数",
+       "offset": 1116,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95x",
+       "name": "笠松ダ・着回数",
+       "offset": 1140,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95y",
+       "name": "名古屋ダ・着回数",
+       "offset": 1164,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95z",
+       "name": "紀三井寺ダ・着回数",
+       "offset": 1188,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95a",
+       "name": "園田ダ・着回数",
+       "offset": 1212,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95b",
+       "name": "姫路ダ・着回数",
+       "offset": 1236,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95c",
+       "name": "益田ダ・着回数",
+       "offset": 1260,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95d",
+       "name": "福山ダ・着回数",
+       "offset": 1284,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95e",
+       "name": "高知ダ・着回数",
+       "offset": 1308,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95f",
+       "name": "佐賀ダ・着回数",
+       "offset": 1332,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95g",
+       "name": "荒尾ダ・着回数",
+       "offset": 1356,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95h",
+       "name": "中津ダ・着回数",
+       "offset": 1380,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95i",
+       "name": "札幌ダ・着回数",
+       "offset": 1404,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95j",
+       "name": "函館ダ・着回数",
+       "offset": 1428,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95k",
+       "name": "新潟ダ・着回数",
+       "offset": 1452,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95l",
+       "name": "中京ダ・着回数",
+       "offset": 1476,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "95m",
+       "name": "春木ダ・着回数",
+       "offset": 1500,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "96",
+     "name": "調教師コード",
+     "offset": 4570,
+     "size": 5,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NC 調教師マスタ地方へリンク"
+    },
+    {
+     "no": "97",
+     "name": "調教師名",
+     "offset": 4575,
+     "size": 34,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "98",
+     "name": "調教師本年･累計成績情報",
+     "offset": 4609,
+     "size": 1524,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "98a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "本年は西暦4桁。累計は 0000"
+      },
+      {
+       "no": "98b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円。調教師では観測した範囲で 0"
+      },
+      {
+       "no": "98c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "98d",
+       "name": "芝着回数",
+       "offset": 24,
+       "size": 5,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外の回数"
+      },
+      {
+       "no": "98e",
+       "name": "ダート着回数",
+       "offset": 54,
+       "size": 5,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外の回数"
+      },
+      {
+       "no": "98f",
+       "name": "芝1000以下・着回数",
+       "offset": 84,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98g",
+       "name": "芝1001-1200・着回数",
+       "offset": 108,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98h",
+       "name": "芝1201-1300・着回数",
+       "offset": 132,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98i",
+       "name": "芝1301-1400・着回数",
+       "offset": 156,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98j",
+       "name": "芝1401-1500・着回数",
+       "offset": 180,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98k",
+       "name": "芝1501-1600・着回数",
+       "offset": 204,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98l",
+       "name": "芝1601-1700・着回数",
+       "offset": 228,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98m",
+       "name": "芝1701-1800・着回数",
+       "offset": 252,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98n",
+       "name": "芝1801-2000・着回数",
+       "offset": 276,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98o",
+       "name": "芝2001-2200・着回数",
+       "offset": 300,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98p",
+       "name": "芝2201以上・着回数",
+       "offset": 324,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98q",
+       "name": "ダ1000以下・着回数",
+       "offset": 348,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98r",
+       "name": "ダ1001-1200・着回数",
+       "offset": 372,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98s",
+       "name": "ダ1201-1300・着回数",
+       "offset": 396,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98t",
+       "name": "ダ1301-1400・着回数",
+       "offset": 420,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98u",
+       "name": "ダ1401-1500・着回数",
+       "offset": 444,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98v",
+       "name": "ダ1501-1600・着回数",
+       "offset": 468,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98w",
+       "name": "ダ1601-1700・着回数",
+       "offset": 492,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98x",
+       "name": "ダ1701-1800・着回数",
+       "offset": 516,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98y",
+       "name": "ダ1801-2000・着回数",
+       "offset": 540,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98z",
+       "name": "ダ2001-2200・着回数",
+       "offset": 564,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98a",
+       "name": "ダ2201以上・着回数",
+       "offset": 588,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98b",
+       "name": "盛岡芝・着回数",
+       "offset": 612,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98c",
+       "name": "札幌芝・着回数",
+       "offset": 636,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98d",
+       "name": "函館芝・着回数",
+       "offset": 660,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98e",
+       "name": "新潟芝・着回数",
+       "offset": 684,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98f",
+       "name": "中京芝・着回数",
+       "offset": 708,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98g",
+       "name": "門別ダ・着回数",
+       "offset": 732,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98h",
+       "name": "北見ダ・着回数",
+       "offset": 756,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98i",
+       "name": "岩見沢ダ・着回数",
+       "offset": 780,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98j",
+       "name": "帯広ダ・着回数",
+       "offset": 804,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98k",
+       "name": "旭川ダ・着回数",
+       "offset": 828,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98l",
+       "name": "盛岡ダ・着回数",
+       "offset": 852,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98m",
+       "name": "水沢ダ・着回数",
+       "offset": 876,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98n",
+       "name": "上山ダ・着回数",
+       "offset": 900,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98o",
+       "name": "三条ダ・着回数",
+       "offset": 924,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98p",
+       "name": "足利ダ・着回数",
+       "offset": 948,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98q",
+       "name": "宇都宮ダ・着回数",
+       "offset": 972,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98r",
+       "name": "高崎ダ・着回数",
+       "offset": 996,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98s",
+       "name": "浦和ダ・着回数",
+       "offset": 1020,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98t",
+       "name": "船橋ダ・着回数",
+       "offset": 1044,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98u",
+       "name": "大井ダ・着回数",
+       "offset": 1068,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98v",
+       "name": "川崎ダ・着回数",
+       "offset": 1092,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98w",
+       "name": "金沢ダ・着回数",
+       "offset": 1116,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98x",
+       "name": "笠松ダ・着回数",
+       "offset": 1140,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98y",
+       "name": "名古屋ダ・着回数",
+       "offset": 1164,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98z",
+       "name": "紀三井寺ダ・着回数",
+       "offset": 1188,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98a",
+       "name": "園田ダ・着回数",
+       "offset": 1212,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98b",
+       "name": "姫路ダ・着回数",
+       "offset": 1236,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98c",
+       "name": "益田ダ・着回数",
+       "offset": 1260,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98d",
+       "name": "福山ダ・着回数",
+       "offset": 1284,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98e",
+       "name": "高知ダ・着回数",
+       "offset": 1308,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98f",
+       "name": "佐賀ダ・着回数",
+       "offset": 1332,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98g",
+       "name": "荒尾ダ・着回数",
+       "offset": 1356,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98h",
+       "name": "中津ダ・着回数",
+       "offset": 1380,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98i",
+       "name": "札幌ダ・着回数",
+       "offset": 1404,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98j",
+       "name": "函館ダ・着回数",
+       "offset": 1428,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98k",
+       "name": "新潟ダ・着回数",
+       "offset": 1452,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98l",
+       "name": "中京ダ・着回数",
+       "offset": 1476,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "98m",
+       "name": "春木ダ・着回数",
+       "offset": 1500,
+       "size": 4,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "99",
+     "name": "馬主コード",
+     "offset": 7657,
+     "size": 6,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NN 馬主マスタ地方へリンク。000000 が多い"
+    },
+    {
+     "no": "100",
+     "name": "馬主名(法人格有)",
+     "offset": 7663,
+     "size": 64,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "101",
+     "name": "馬主名(法人格無)",
+     "offset": 7727,
+     "size": 64,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "102",
+     "name": "馬主本年･累計成績情報",
+     "offset": 7791,
+     "size": 60,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "102a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "観測した範囲では 0000"
+      },
+      {
+       "no": "102b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "102c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "102d",
+       "name": "着回数",
+       "offset": 24,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      }
+     ]
+    },
+    {
+     "no": "103",
+     "name": "生産者コード",
+     "offset": 7911,
+     "size": 6,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "NB 生産者マスタ地方へリンク。000000 が多い。旧サイズ（6桁）"
+    },
+    {
+     "no": "104",
+     "name": "生産者名(法人格有)",
+     "offset": 7917,
+     "size": 70,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "旧サイズ（70バイト）"
+    },
+    {
+     "no": "105",
+     "name": "生産者名(法人格無)",
+     "offset": 7987,
+     "size": 70,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "旧サイズ（70バイト）"
+    },
+    {
+     "no": "106",
+     "name": "生産者本年･累計成績情報",
+     "offset": 8057,
+     "size": 60,
+     "repeat": 2,
+     "is_key": false,
+     "default": "",
+     "comment": "本年・累計の順",
+     "children": [
+      {
+       "no": "106a",
+       "name": "設定年",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "観測した範囲では 0000"
+      },
+      {
+       "no": "106b",
+       "name": "本賞金合計",
+       "offset": 4,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "106c",
+       "name": "付加賞金合計",
+       "offset": 14,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "単位：百円"
+      },
+      {
+       "no": "106d",
+       "name": "着回数",
+       "offset": 24,
+       "size": 6,
+       "repeat": 6,
+       "is_key": false,
+       "default": "",
+       "comment": "1着〜5着・着外(6着以下)の回数"
+      }
+     ]
+    },
+    {
+     "no": "107",
+     "name": "レコード区切",
+     "offset": 8177,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-7",
+   "title": "票数A（枠単）",
+   "record_id": "HA",
+   "length": 1032,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "開催年",
+     "offset": 11,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行年 西暦4桁 yyyy形式"
+    },
+    {
+     "no": "5",
+     "name": "開催月日",
+     "offset": 15,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行月日 各2桁 mmdd形式"
+    },
+    {
+     "no": "6",
+     "name": "競馬場コード",
+     "offset": 19,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "<コード表 2001.競馬場コード>参照。地方は 30〜57。ばんえい帯広は 83"
+    },
+    {
+     "no": "7",
+     "name": "開催回[第N回]",
+     "offset": 21,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行回"
+    },
+    {
+     "no": "8",
+     "name": "開催日目[N日目]",
+     "offset": 23,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行日目"
+    },
+    {
+     "no": "9",
+     "name": "レース番号",
+     "offset": 25,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース番号"
+    },
+    {
+     "no": "10",
+     "name": "登録頭数",
+     "offset": 27,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "11",
+     "name": "出走頭数",
+     "offset": 29,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "12",
+     "name": "発売フラグ　枠単",
+     "offset": 31,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "枠単発売の有無（0:発売なし 7:発売あり）。観測した範囲では 7"
+    },
+    {
+     "no": "13",
+     "name": "返還枠番情報(枠番1～8)",
+     "offset": 32,
+     "size": 1,
+     "repeat": 8,
+     "is_key": false,
+     "default": "",
+     "comment": "（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "14",
+     "name": "返還同枠情報(枠番1～8)",
+     "offset": 40,
+     "size": 1,
+     "repeat": 8,
+     "is_key": false,
+     "default": "",
+     "comment": "（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "15",
+     "name": "枠単票数",
+     "offset": 48,
+     "size": 15,
+     "repeat": 64,
+     "is_key": false,
+     "default": "",
+     "comment": "1着枠1〜8 × 2着枠1〜8 の順（11,12,…,18,21,…,88）。枠に1頭しかいない同枠の組と発売のない組は空白。取消などで対象外になった組は '-' 埋め",
+     "children": [
+      {
+       "no": "15a",
+       "name": "組番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "1着枠番＋2着枠番"
+      },
+      {
+       "no": "15b",
+       "name": "票数",
+       "offset": 2,
+       "size": 11,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "15c",
+       "name": "人気順",
+       "offset": 13,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "16",
+     "name": "枠単票数合計",
+     "offset": 1008,
+     "size": 11,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "枠単票数の和"
+    },
+    {
+     "no": "17",
+     "name": "枠単返還票数合計",
+     "offset": 1019,
+     "size": 11,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "18",
+     "name": "レコード区切",
+     "offset": 1030,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-8",
+   "title": "オッズA（枠単）",
+   "record_id": "OA",
+   "length": 693,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "レコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "どの段階の情報か。使われる値は各レコードの説明にある"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "開催年",
+     "offset": 11,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行年 西暦4桁 yyyy形式"
+    },
+    {
+     "no": "5",
+     "name": "開催月日",
+     "offset": 15,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行月日 各2桁 mmdd形式"
+    },
+    {
+     "no": "6",
+     "name": "競馬場コード",
+     "offset": 19,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "<コード表 2001.競馬場コード>参照。地方は 30〜57。ばんえい帯広は 83"
+    },
+    {
+     "no": "7",
+     "name": "開催回[第N回]",
+     "offset": 21,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行回"
+    },
+    {
+     "no": "8",
+     "name": "開催日目[N日目]",
+     "offset": 23,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース施行日目"
+    },
+    {
+     "no": "9",
+     "name": "レース番号",
+     "offset": 25,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "",
+     "comment": "該当レース番号"
+    },
+    {
+     "no": "10",
+     "name": "発表月日時分",
+     "offset": 27,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "mmddHHmm。時系列で貯めるときはこれも鍵に足す"
+    },
+    {
+     "no": "11",
+     "name": "登録頭数",
+     "offset": 35,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "12",
+     "name": "出走頭数",
+     "offset": 37,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "13",
+     "name": "発売フラグ　枠単",
+     "offset": 39,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "枠単発売の有無（0:発売なし 7:発売あり）。観測した範囲では 7"
+    },
+    {
+     "no": "14",
+     "name": "枠単オッズ",
+     "offset": 40,
+     "size": 10,
+     "repeat": 64,
+     "is_key": false,
+     "default": "",
+     "comment": "1着枠1〜8 × 2着枠1〜8 の順（11,12,…,18,21,…,88）。枠に1頭しかいない同枠の組と発売のない組は空白。取消などで対象外になった組は '-' 埋め",
+     "children": [
+      {
+       "no": "14a",
+       "name": "組番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "1着枠番＋2着枠番"
+      },
+      {
+       "no": "14b",
+       "name": "オッズ",
+       "offset": 2,
+       "size": 6,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "0.1倍単位（021897 → 2189.7倍）"
+      },
+      {
+       "no": "14c",
+       "name": "人気順",
+       "offset": 8,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "15",
+     "name": "枠単票数合計",
+     "offset": 680,
+     "size": 11,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "16",
+     "name": "レコード区切",
+     "offset": 691,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-9",
+   "title": "払戻",
+   "record_id": "HR",
+   "length": 719,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "\"HR\" をセットレコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "1:速報成績(払戻金確定)　2:成績(月曜)\n9:レース中止　0:該当レコード削除(提供ミスなどの理由による)"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "開催年",
+     "offset": 11,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行年 西暦4桁 yyyy形式"
+    },
+    {
+     "no": "5",
+     "name": "開催月日",
+     "offset": 15,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行月日 各2桁 mmdd形式"
+    },
+    {
+     "no": "6",
+     "name": "競馬場コード",
+     "offset": 19,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行競馬場 <コード表 2001.競馬場コード>参照"
+    },
+    {
+     "no": "7",
+     "name": "開催回[第N回]",
+     "offset": 21,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行回 その競馬場でその年の何回目の開催かを示す"
+    },
+    {
+     "no": "8",
+     "name": "開催日目[N日目]",
+     "offset": 23,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行日目 そのレース施行回で何日目の開催かを示す"
+    },
+    {
+     "no": "9",
+     "name": "レース番号",
+     "offset": 25,
+     "size": 2,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース番号"
+    },
+    {
+     "no": "10",
+     "name": "登録頭数",
+     "offset": 27,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "出馬表発表時の登録頭数"
+    },
+    {
+     "no": "11",
+     "name": "出走頭数",
+     "offset": 29,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "登録頭数から出走取消と競走除外･発走除外を除いた頭数"
+    },
+    {
+     "no": "12",
+     "name": "不成立フラグ　単勝",
+     "offset": 31,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "単勝不成立の有無　（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "13",
+     "name": "不成立フラグ　複勝",
+     "offset": 32,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "複勝不成立の有無　（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "14",
+     "name": "不成立フラグ　枠連",
+     "offset": 33,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠連不成立の有無　（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "15",
+     "name": "不成立フラグ　馬連",
+     "offset": 34,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬連不成立の有無　（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "16",
+     "name": "不成立フラグ　ワイド",
+     "offset": 35,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "ワイド不成立の有無（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "17",
+     "name": "不成立フラグ　枠単",
+     "offset": 36,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠単不成立の有無（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "18",
+     "name": "不成立フラグ　馬単",
+     "offset": 37,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬単不成立の有無　（0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "19",
+     "name": "不成立フラグ　3連複",
+     "offset": 38,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連複不成立の有無 （0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "20",
+     "name": "不成立フラグ　3連単",
+     "offset": 39,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連単不成立の有無 （0:不成立なし 1:不成立あり）"
+    },
+    {
+     "no": "21",
+     "name": "特払フラグ　単勝",
+     "offset": 40,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "単勝特払の有無　（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "22",
+     "name": "特払フラグ　複勝",
+     "offset": 41,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "複勝特払の有無　（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "23",
+     "name": "特払フラグ　枠連",
+     "offset": 42,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠連特払の有無　（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "24",
+     "name": "特払フラグ　馬連",
+     "offset": 43,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬連特払の有無　（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "25",
+     "name": "特払フラグ　ワイド",
+     "offset": 44,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "ワイド特払の有無（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "26",
+     "name": "特払フラグ　枠単",
+     "offset": 45,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠単特払の有無（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "27",
+     "name": "特払フラグ　馬単",
+     "offset": 46,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬単特払の有無　（0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "28",
+     "name": "特払フラグ　3連複",
+     "offset": 47,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連複特払の有無 （0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "29",
+     "name": "特払フラグ　3連単",
+     "offset": 48,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連単特払の有無 （0:特払なし 1:特払あり）"
+    },
+    {
+     "no": "30",
+     "name": "返還フラグ　単勝",
+     "offset": 49,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "単勝返還の有無　（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "31",
+     "name": "返還フラグ　複勝",
+     "offset": 50,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "複勝返還の有無　（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "32",
+     "name": "返還フラグ　枠連",
+     "offset": 51,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠連返還の有無　（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "33",
+     "name": "返還フラグ　馬連",
+     "offset": 52,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬連返還の有無　（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "34",
+     "name": "返還フラグ　ワイド",
+     "offset": 53,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "ワイド返還の有無（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "35",
+     "name": "返還フラグ　枠単",
+     "offset": 54,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "枠単返還の有無（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "36",
+     "name": "返還フラグ　馬単",
+     "offset": 55,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "馬単返還の有無　（0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "37",
+     "name": "返還フラグ　3連複",
+     "offset": 56,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連複返還の有無 （0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "38",
+     "name": "返還フラグ　3連単",
+     "offset": 57,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "3連単返還の有無 （0:返還なし 1:返還あり）"
+    },
+    {
+     "no": "39",
+     "name": "返還馬番情報(馬番01～28)",
+     "offset": 58,
+     "size": 1,
+     "repeat": 28,
+     "is_key": false,
+     "default": "0",
+     "comment": "（0:返還なし 1:返還あり）　発売後取消しとなり返還対象となった馬番のエリアに \"1\" を設定\n（例）5番取消しの場合 0000100000000000000000000000"
+    },
+    {
+     "no": "40",
+     "name": "返還枠番情報(枠番1～8)",
+     "offset": 86,
+     "size": 1,
+     "repeat": 8,
+     "is_key": false,
+     "default": "0",
+     "comment": "（0:返還なし 1:返還あり）　発売後取消しとなり返還対象となった枠番のエリアに \"1\" を設定\n（例）10頭だての5番取消しの場合、5枠は5番のみのため5枠はなくなる 00001000"
+    },
+    {
+     "no": "41",
+     "name": "返還同枠情報(枠番1～8)",
+     "offset": 94,
+     "size": 1,
+     "repeat": 8,
+     "is_key": false,
+     "default": "0",
+     "comment": "（0:返還なし 1:返還あり）　発売後取消しとなり返還対象となった枠番のエリアに \"1\" を設定\n（例）10頭だての8番取消しの場合、7枠は7番、8番の登録があるため7枠は取消しにならない\n　　　ただし7-7は取消しになるので同枠のみ取り消しとなる 00000010"
+    },
+    {
+     "no": "42",
+     "name": "単勝払戻",
+     "offset": 102,
+     "size": 13,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し3回",
+     "children": [
+      {
+       "no": "42a",
+       "name": "馬番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "単勝的中馬番　（00:発売なし、特払、不成立）"
+      },
+      {
+       "no": "42b",
+       "name": "払戻金",
+       "offset": 2,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "単勝払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "42c",
+       "name": "人気順",
+       "offset": 11,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "単勝人気順"
+      }
+     ]
+    },
+    {
+     "no": "43",
+     "name": "複勝払戻",
+     "offset": 141,
+     "size": 13,
+     "repeat": 5,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し5回",
+     "children": [
+      {
+       "no": "43a",
+       "name": "馬番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "複勝的中馬番　（00:発売なし、特払、不成立）"
+      },
+      {
+       "no": "43b",
+       "name": "払戻金",
+       "offset": 2,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "複勝払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "43c",
+       "name": "人気順",
+       "offset": 11,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "複勝人気順"
+      }
+     ]
+    },
+    {
+     "no": "44",
+     "name": "枠連払戻",
+     "offset": 206,
+     "size": 13,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し3回",
+     "children": [
+      {
+       "no": "44a",
+       "name": "組番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "枠連的中馬番　（00:発売なし、特払、不成立）"
+      },
+      {
+       "no": "44b",
+       "name": "払戻金",
+       "offset": 2,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "枠連払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "44c",
+       "name": "人気順",
+       "offset": 11,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "枠連人気順"
+      }
+     ]
+    },
+    {
+     "no": "45",
+     "name": "馬連払戻",
+     "offset": 245,
+     "size": 16,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し3回",
+     "children": [
+      {
+       "no": "45a",
+       "name": "組番",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬連的中馬番組合　（0000:発売なし、特払、不成立）"
+      },
+      {
+       "no": "45b",
+       "name": "払戻金",
+       "offset": 4,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬連払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "45c",
+       "name": "人気順",
+       "offset": 13,
+       "size": 3,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬連人気順"
+      }
+     ]
+    },
+    {
+     "no": "46",
+     "name": "ワイド払戻",
+     "offset": 293,
+     "size": 16,
+     "repeat": 7,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し7回",
+     "children": [
+      {
+       "no": "46a",
+       "name": "組番",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "ワイド的中馬番組合　（0000:発売なし、特払、不成立）"
+      },
+      {
+       "no": "46b",
+       "name": "払戻金",
+       "offset": 4,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "ワイド払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "46c",
+       "name": "人気順",
+       "offset": 13,
+       "size": 3,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "ワイド人気順"
+      }
+     ]
+    },
+    {
+     "no": "47",
+     "name": "枠単払戻",
+     "offset": 405,
+     "size": 13,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "JV-Data の 予備(16×3) の位置。3同着まで考慮し繰返し3回",
+     "children": [
+      {
+       "no": "47a",
+       "name": "組番",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": "1着枠番＋2着枠番"
+      },
+      {
+       "no": "47b",
+       "name": "払戻金",
+       "offset": 2,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      },
+      {
+       "no": "47c",
+       "name": "人気順",
+       "offset": 11,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "",
+       "comment": ""
+      }
+     ]
+    },
+    {
+     "no": "48",
+     "name": "予備",
+     "offset": 444,
+     "size": 9,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "49",
+     "name": "馬単払戻",
+     "offset": 453,
+     "size": 16,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し6回",
+     "children": [
+      {
+       "no": "49a",
+       "name": "組番",
+       "offset": 0,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬単的中馬番組合　（0000:発売なし、特払、不成立）"
+      },
+      {
+       "no": "49b",
+       "name": "払戻金",
+       "offset": 4,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬単払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "49c",
+       "name": "人気順",
+       "offset": 13,
+       "size": 3,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "馬単人気順"
+      }
+     ]
+    },
+    {
+     "no": "50",
+     "name": "3連複払戻",
+     "offset": 549,
+     "size": 18,
+     "repeat": 3,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し3回",
+     "children": [
+      {
+       "no": "50a",
+       "name": "組番",
+       "offset": 0,
+       "size": 6,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連複的中馬番組合　（000000:発売なし、特払、不成立）"
+      },
+      {
+       "no": "50b",
+       "name": "払戻金",
+       "offset": 6,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連複払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "50c",
+       "name": "人気順",
+       "offset": 15,
+       "size": 3,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連複人気順"
+      }
+     ]
+    },
+    {
+     "no": "51",
+     "name": "3連単払戻",
+     "offset": 603,
+     "size": 19,
+     "repeat": 6,
+     "is_key": false,
+     "default": "",
+     "comment": "3同着まで考慮し繰返し6回",
+     "children": [
+      {
+       "no": "51a",
+       "name": "組番",
+       "offset": 0,
+       "size": 6,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連単的中馬番組合　（000000:発売なし、特払、不成立）"
+      },
+      {
+       "no": "51b",
+       "name": "払戻金",
+       "offset": 6,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連単払戻金　（特払、不成立の金額が入る）"
+      },
+      {
+       "no": "51c",
+       "name": "人気順",
+       "offset": 15,
+       "size": 4,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "3連単人気順"
+      }
+     ]
+    },
+    {
+     "no": "52",
+     "name": "レコード区切",
+     "offset": 717,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  },
+  {
+   "index": "NV-10",
+   "title": "重勝式",
+   "record_id": "WF",
+   "length": 7215,
+   "items": [
+    {
+     "no": "1",
+     "name": "レコード種別ID",
+     "offset": 0,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "\"WF\" をセットレコードフォーマットを特定する"
+    },
+    {
+     "no": "2",
+     "name": "データ区分",
+     "offset": 2,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "1:重勝式詳細発表時　2:重勝式対象1レース目確定時\n3:重勝式払戻発表時　7:成績(月曜)　9:重勝式中止時\n0:該当レコード削除(提供ミスなどの理由による)\n※1 7:成績(月曜)は蓄積系データのみ設定されます。\n    蓄積系データにて7:成績(月曜)提供後も速報系データには3:重勝式払戻発表時が提供されます。"
+    },
+    {
+     "no": "3",
+     "name": "データ作成年月日",
+     "offset": 3,
+     "size": 8,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "西暦4桁＋月日各2桁 yyyymmdd 形式"
+    },
+    {
+     "no": "4",
+     "name": "開催年",
+     "offset": 11,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行年 西暦4桁 yyyy形式"
+    },
+    {
+     "no": "5",
+     "name": "開催月日",
+     "offset": 15,
+     "size": 4,
+     "repeat": 1,
+     "is_key": true,
+     "default": "0",
+     "comment": "該当レース施行月日 各2桁 mmdd形式"
+    },
+    {
+     "no": "6",
+     "name": "予備",
+     "offset": 19,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": ""
+    },
+    {
+     "no": "7",
+     "name": "式別コード",
+     "offset": 20,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "重勝式の式別。観測した範囲では 1（3レースの馬単を当てる重勝式）のみ"
+    },
+    {
+     "no": "8",
+     "name": "重勝式対象レース情報",
+     "offset": 21,
+     "size": 8,
+     "repeat": 5,
+     "is_key": false,
+     "default": "",
+     "comment": "重勝式対象レースを設定。3レースの重勝式では4・5番目が 00 埋め",
+     "children": [
+      {
+       "no": "8a",
+       "name": "競馬場コード",
+       "offset": 0,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "0",
+       "comment": "該当レース施行競馬場 <コード表 2001.競馬場コード>参照"
+      },
+      {
+       "no": "8b",
+       "name": "開催回[第N回]",
+       "offset": 2,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "0",
+       "comment": "該当レース施行回 その競馬場でその年の何回目の開催かを示す"
+      },
+      {
+       "no": "8c",
+       "name": "開催日目[N日目]",
+       "offset": 4,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "0",
+       "comment": "該当レース施行日目 そのレース施行回で何日目の開催かを示す"
+      },
+      {
+       "no": "8d",
+       "name": "レース番号",
+       "offset": 6,
+       "size": 2,
+       "repeat": 1,
+       "is_key": false,
+       "default": "0",
+       "comment": "該当レース番号"
+      }
+     ]
+    },
+    {
+     "no": "9",
+     "name": "予備",
+     "offset": 61,
+     "size": 6,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": ""
+    },
+    {
+     "no": "10",
+     "name": "重勝式発売票数",
+     "offset": 67,
+     "size": 11,
+     "repeat": 1,
+     "is_key": false,
+     "default": "sp",
+     "comment": "重勝式の発売票数"
+    },
+    {
+     "no": "11",
+     "name": "有効票数情報",
+     "offset": 78,
+     "size": 11,
+     "repeat": 5,
+     "is_key": false,
+     "default": "",
+     "comment": "",
+     "children": [
+      {
+       "no": "11a",
+       "name": "有効票数",
+       "offset": 0,
+       "size": 11,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "重勝式対象レース確定時、的中可能性のある残りの票数の数を示す\n7.<重勝式対象レース情報>と同じ順で設定\n(7.<重勝式対象レース情報>の3番目(繰返3回目)のレースが確定した場合、\n10.<有効票数情報>の3番目(繰返3回目)の箇所に値を設定)"
+      }
+     ]
+    },
+    {
+     "no": "12",
+     "name": "返還フラグ",
+     "offset": 133,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "0：返還無　1：返還有"
+    },
+    {
+     "no": "13",
+     "name": "不成立フラグ",
+     "offset": 134,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "0：不成立無　1：不成立有"
+    },
+    {
+     "no": "14",
+     "name": "的中無フラグ",
+     "offset": 135,
+     "size": 1,
+     "repeat": 1,
+     "is_key": false,
+     "default": "0",
+     "comment": "0：的中有　1：的中無"
+    },
+    {
+     "no": "15",
+     "name": "キャリーオーバー金額初期",
+     "offset": 136,
+     "size": 15,
+     "repeat": 1,
+     "is_key": false,
+     "default": "sp",
+     "comment": "単位 円 開催日当日開始時の、重勝式のキャリーオーバー金額を示す"
+    },
+    {
+     "no": "16",
+     "name": "キャリーオーバー金額残高",
+     "offset": 151,
+     "size": 15,
+     "repeat": 1,
+     "is_key": false,
+     "default": "sp",
+     "comment": "単位 円 重勝式の次回へのキャリーオーバー金額を示す"
+    },
+    {
+     "no": "17",
+     "name": "重勝式払戻情報",
+     "offset": 166,
+     "size": 29,
+     "repeat": 243,
+     "is_key": false,
+     "default": "",
+     "comment": "",
+     "children": [
+      {
+       "no": "17a",
+       "name": "組番",
+       "offset": 0,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "16進表記の数。10進に直すと「1着馬番2桁＋2着馬番2桁」を対象レースの順に並べた数になる（3レースなら12桁。0997E40C8D → 041203010701 → 4-12, 3-1, 7-1）"
+      },
+      {
+       "no": "17b",
+       "name": "重勝式払戻金",
+       "offset": 10,
+       "size": 9,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "重勝式払戻金　（的中無の場合000000000を設定）"
+      },
+      {
+       "no": "17c",
+       "name": "的中票数",
+       "offset": 19,
+       "size": 10,
+       "repeat": 1,
+       "is_key": false,
+       "default": "sp",
+       "comment": "重勝式的中票数　（的中無の場合0000000000を設定）"
+      }
+     ]
+    },
+    {
+     "no": "18",
+     "name": "レコード区切",
+     "offset": 7213,
+     "size": 2,
+     "repeat": 1,
+     "is_key": false,
+     "default": "",
+     "comment": "CR/LF"
+    }
+   ]
+  }
+ ],
+ "dataspecs": [
+  {
+   "id": "RACE",
+   "name": "レース情報",
+   "categories": [
+    "蓄積系",
+    "セットアップ"
+   ],
+   "record_ids": [
+    "RA",
+    "SE",
+    "HR",
+    "H1",
+    "H6",
+    "O1",
+    "O2",
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "HA",
+    "OA",
+    "WF"
+   ]
+  },
+  {
+   "id": "DIFN",
+   "name": "蓄積情報（新サイズ）",
+   "categories": [
+    "蓄積系",
+    "セットアップ"
+   ],
+   "record_ids": [
+    "BN",
+    "CH",
+    "KS",
+    "NC",
+    "NK",
+    "NN",
+    "NU"
+   ]
+  },
+  {
+   "id": "DIFF",
+   "name": "蓄積情報（旧サイズ）",
+   "categories": [
+    "蓄積系",
+    "セットアップ"
+   ],
+   "record_ids": [
+    "BN",
+    "CH",
+    "KS",
+    "NB",
+    "NC",
+    "NK",
+    "NN",
+    "NU"
+   ]
+  },
+  {
+   "id": "SNAP",
+   "name": "出走時点情報",
+   "categories": [
+    "蓄積系",
+    "セットアップ"
+   ],
+   "record_ids": [
+    "ND"
+   ]
+  },
+  {
+   "id": "0B11",
+   "name": "速報馬体重",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "WH"
+   ]
+  },
+  {
+   "id": "0B12",
+   "name": "速報成績",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "RA",
+    "SE",
+    "HR"
+   ]
+  },
+  {
+   "id": "0B14",
+   "name": "速報開催情報",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "WE",
+    "AV"
+   ]
+  },
+  {
+   "id": "0B15",
+   "name": "速報レース情報",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "RA",
+    "SE",
+    "HR"
+   ]
+  },
+  {
+   "id": "0B30",
+   "name": "速報オッズ（全賭式）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O1",
+    "O2",
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "OA"
+   ]
+  },
+  {
+   "id": "0B31",
+   "name": "速報オッズ（単複枠）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O1"
+   ]
+  },
+  {
+   "id": "0B32",
+   "name": "速報オッズ（馬連）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O2"
+   ]
+  },
+  {
+   "id": "0B33",
+   "name": "速報オッズ（ワイド）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O3"
+   ]
+  },
+  {
+   "id": "0B34",
+   "name": "速報オッズ（馬単）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O4"
+   ]
+  },
+  {
+   "id": "0B35",
+   "name": "速報オッズ（3連複）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O5"
+   ]
+  },
+  {
+   "id": "0B36",
+   "name": "速報オッズ（3連単）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O6"
+   ]
+  },
+  {
+   "id": "0B41",
+   "name": "時系列オッズ（単複枠）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O1"
+   ]
+  },
+  {
+   "id": "0B42",
+   "name": "時系列オッズ（馬連）",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "O2"
+   ]
+  },
+  {
+   "id": "0B51",
+   "name": "速報重勝式",
+   "categories": [
+    "速報系"
+   ],
+   "record_ids": [
+    "WF"
+   ]
+  }
+ ]
+}

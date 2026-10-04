@@ -53,4 +53,7 @@ tables = {}
 toc.permalink = true
 toc.title = "このページの内容"
 pymdownx.details = {}
-pymdownx.superfences = {}
+# ER 図（Mermaid）を描くための設定。``` mermaid のコードブロックが図になる。
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
