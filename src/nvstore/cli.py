@@ -127,12 +127,12 @@ def cmd_rt(args: argparse.Namespace) -> int:
 def _store_records(args: argparse.Namespace, link) -> None:
     """開いたぶんを読み切って DuckDB に書き、種別ごとの件数を出す。"""
     from jvstore.record import UNKNOWN_STATS_KEY
-    from jvstore.store import DuckStore
+    from .nv_store import NvStore
 
     layouts = load_layouts()
     started = time.time()
     written = 0
-    with DuckStore(Path(args.db), layouts) as store:
+    with NvStore(Path(args.db), layouts) as store:
         records = link.records(
             on_file=lambda name: _log(f"  読込: {name}"),
             on_progress=lambda done, total: _log(f"  ダウンロード {done:,}/{total:,}"),
