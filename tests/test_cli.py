@@ -10,7 +10,7 @@ from nvstore.link32.__main__ import build_parser as build_link32_parser
 def test_既定の保存先とポートは中央とぶつからない():
     args = build_parser().parse_args(["sync"])
     assert args.db == DEFAULT_DB == "nvdata.duckdb" and args.years == 10
-    assert build_parser().parse_args(["serve"]).port == DEFAULT_PORT == 8767
+    assert build_parser().parse_args(["serve"]).port == DEFAULT_PORT == 8768
 
 
 def test_コマンドの引数():

@@ -34,7 +34,7 @@ uv を使わないときは、環境変数 `NVSTORE_PYTHON32` に pywin32 入り
 3. 取得後は表を選んで件数・期間・中身を確認できます。
 
 ```powershell
-# 保存先とポートを変える（既定はこのフォルダの nvdata.duckdb と 8767。jvdata-store の 8766 と同時に開ける）
+# 保存先とポートを変える（既定はこのフォルダの nvdata.duckdb と 8768。jvdata-store の 8766・keiba-yosou の検索画面の 8767 と同時に開ける）
 run.bat --db D:\keiba\nvdata.duckdb --port 9001
 ```
 
