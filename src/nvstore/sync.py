@@ -13,6 +13,10 @@
 
 **DIFF は NB（生産者マスタ地方）だけを取り込む。** DIFF に入ってくる NU は DIFN より短い旧サイズで、
 血統登録番号の体系も違う。同じ表に混ぜると壊れた行が入るので、DIFF からはほかの種別に無い NB だけを取る。
+
+**SNAP は ND（出走別着度数地方）だけを取り込む。** 2016〜2023年のセットアップには JV-Data の形の CK も入ってくるが、
+ND と同じレース・馬の記録で、中央の成績しか持たず（地方の馬では全部 0）、生産者の項目が旧サイズ（6,864 バイト）で
+JV-Data仕様書 4.9 の CK（6,870 バイト）とずれる。
 """
 
 from __future__ import annotations
@@ -47,7 +51,7 @@ SYNC_DATASPECS: tuple[tuple[str, str], ...] = (
 TITLES = dict(SYNC_DATASPECS)
 
 #: データ種別から取り込むレコード種別を限る。載っていない種別は全部取り込む。
-RECORD_FILTER: dict[str, frozenset[str]] = {"DIFF": frozenset({"NB"})}
+RECORD_FILTER: dict[str, frozenset[str]] = {"DIFF": frozenset({"NB"}), "SNAP": frozenset({"ND"})}
 
 #: ``_meta`` に前回の続きの時刻を残すときのキーの接頭辞。
 _META_PREFIX = "sync:"

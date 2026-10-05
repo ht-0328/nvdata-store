@@ -61,6 +61,14 @@ def test_DIFF_からは生産者マスタ地方だけを取り込む(db_path):
     assert result.records == 1 and result.counts["nb"] == 1 and "nu" not in result.counts
 
 
+def test_SNAP_からは出走別着度数地方だけを取り込む(db_path):
+    nd = make_record("ND", **RACE, 血統登録番号="2022100001")
+    ck = make_record("CK", **RACE, 血統登録番号="2022100001")
+    link = FakeLink({"SNAP": [nd, ck]})
+    result = sync(db_path, years=1, dataspecs=["SNAP"], log=lambda _: None, link_factory=lambda: link)
+    assert result.records == 1 and result.counts["nd"] == 1 and "ck" not in result.counts
+
+
 def test_DIFN_は全部取り込む(db_path):
     link = FakeLink({"DIFN": [make_record("NU", 血統登録番号="2022100001"), make_record("KS", 騎手コード="05001")]})
     result = sync(db_path, years=1, dataspecs=["DIFN"], log=lambda _: None, link_factory=lambda: link)
