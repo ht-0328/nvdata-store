@@ -20,12 +20,13 @@ import time
 from pathlib import Path
 
 from .layouts import load_layouts
+from .web.server import DEFAULT_PORT as SERVER_DEFAULT_PORT
 
 #: 既定の保存先。中央の jvdata.duckdb とは別のファイルにする。
 DEFAULT_DB = "nvdata.duckdb"
 
-#: 画面のポート。jvdata-store（8766）と同時に開けるよう、1つずらす。
-DEFAULT_PORT = 8767
+#: 画面の既定のポート。値は画面のサーバー（web/server.py）の1か所にだけ書く。
+DEFAULT_PORT = SERVER_DEFAULT_PORT
 
 #: 途中経過を出すレコード件数の刻み。
 _PROGRESS_EVERY = 50000

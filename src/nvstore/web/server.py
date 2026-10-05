@@ -28,7 +28,8 @@ from .table_browser import NvTableBrowser
 APP = "nvdata-store"
 
 STATIC = Path(__file__).parent / "static"
-DEFAULT_PORT = 8767
+#: 既定のポート。jvdata-store の画面（8766）と keiba-yosou の検索画面（8767）と同時に開けるよう、どちらとも違う番号にする。
+DEFAULT_PORT = 8768
 
 #: 1回の速報の取得で指定できる開催日の数。
 MAX_REALTIME_DAYS = 7
