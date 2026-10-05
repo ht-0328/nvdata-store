@@ -22,12 +22,12 @@ from threading import Event
 from typing import Any, Callable
 
 from jvstore.realtime import RealtimeResult, parse_day
-from jvstore.store import DuckStore
 from jvstore.sync import check_cancel
 
 from .layouts import load_layouts
 from .link32.nvlink_error import NVLinkError
 from .link_process import LinkProcess
+from .nv_store import NvStore
 
 __all__ = ["DAY_DATASPECS", "RACE_DATASPECS", "RealtimeResult", "fetch_day", "parse_day"]
 
@@ -61,7 +61,7 @@ def fetch_day(
     log(f"{key[:4]}-{key[4:6]}-{key[6:]} の速報を取得します")
     log(f"保存先: {db_path.resolve()}")
 
-    store = DuckStore(db_path, layouts)
+    store = NvStore(db_path, layouts)
     try:
         for dataspec, title in DAY_DATASPECS:
             check_cancel(stop)
@@ -84,7 +84,7 @@ def fetch_day(
 
 def _fetch_one(
     link: Any,
-    store: DuckStore,
+    store: NvStore,
     dataspec: str,
     key: str,
     summary: RealtimeResult,
@@ -122,7 +122,7 @@ def _fetch_one(
         log(f"  {written:,} レコード / {time.time() - started:.1f} 秒")
 
 
-def _race_keys(store: DuckStore, day: str) -> list[str]:
+def _race_keys(store: NvStore, day: str) -> list[str]:
     """その日の全レースの要求キー（``YYYYMMDDJJKKHHRR``）。``ra`` がまだ無ければ空。"""
     exists = store.con.execute(
         "SELECT count(*) FROM duckdb_tables() WHERE table_name = 'ra'"

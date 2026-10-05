@@ -24,13 +24,13 @@ from threading import Event
 from typing import Any, Callable, Sequence
 
 from jvstore.record import record_id_of
-from jvstore.store import DuckStore
 from jvstore.sync import Cancelled, SyncResult, check_cancel
 
 from .layouts import load_layouts
 from .link32.broken_file_error import BrokenFileError
 from .link32.nvlink_error import NVLinkError
 from .link_process import LinkProcess
+from .nv_store import NvStore
 from .open_result import NO_DATA, OpenResult
 
 __all__ = ["RECORD_FILTER", "SYNC_DATASPECS", "TITLES", "Cancelled", "SyncResult", "start_time", "sync"]
@@ -104,7 +104,7 @@ def sync(
     log(f"対象データ種別: {', '.join(specs)}")
     log(f"保存先: {db_path.resolve()}")
 
-    store = DuckStore(db_path, layouts)
+    store = NvStore(db_path, layouts)
     try:
         for position, dataspec in enumerate(specs, 1):
             check_cancel(stop)
@@ -125,7 +125,7 @@ def sync(
     return summary
 
 
-def _resume_point(store: DuckStore, dataspec: str, start: str, force_setup: bool) -> tuple[str, int]:
+def _resume_point(store: NvStore, dataspec: str, start: str, force_setup: bool) -> tuple[str, int]:
     """読み出し開始時刻と NVOpen の option。前回の続きが残っていればそこから、無ければセットアップ。"""
     saved = store.meta(_META_PREFIX + dataspec)
     if saved and not force_setup:
@@ -135,7 +135,7 @@ def _resume_point(store: DuckStore, dataspec: str, start: str, force_setup: bool
 
 def _sync_dataspec(
     factory: LinkFactory,
-    store: DuckStore,
+    store: NvStore,
     dataspec: str,
     fromtime: str,
     option: int,
@@ -180,7 +180,7 @@ def _delete_broken(link: Any, error: BrokenFileError, *, log: Callable[[str], No
 
 def _open_and_read(
     factory: LinkFactory,
-    store: DuckStore,
+    store: NvStore,
     dataspec: str,
     fromtime: str,
     option: int,
@@ -217,7 +217,7 @@ def _open_and_read(
 
 def _read_records(
     link: Any,
-    store: DuckStore,
+    store: NvStore,
     dataspec: str,
     result: OpenResult,
     summary: SyncResult,
@@ -248,7 +248,7 @@ def _read_records(
     log(f"  {written:,} レコード / {time.time() - started:.1f} 秒{note}")
 
 
-def _remember_progress(store: DuckStore, dataspec: str, timestamp: str) -> None:
+def _remember_progress(store: NvStore, dataspec: str, timestamp: str) -> None:
     """次回の続きの起点を残す。タイムスタンプが取れないとき（該当データなし）は触らない。"""
     if timestamp:
         store.set_meta(_META_PREFIX + dataspec, timestamp)
